@@ -7,21 +7,21 @@ Although RabbitMQ support multiple protocols, the most commonly used is AMQP.
 
 **How RabbitMQ Works:**  
 **1. Basic Architecture:**  
- > **Producer**: The application that sends messages to RabbitMQ.  
- > **Exchange**: Receives messages from producers and routes them to queues based on predefined rules (bindings and routing keys).  
- > **Queue**: A buffer that stores messages until they are processed by consumers.  
- > **Binding**: A link between an exchange and a queue, defining how messages should be routed.  
- > **Consumer**: The application that receives and processes messages from the queue.  
+ - **Producer**: The application that sends messages to RabbitMQ.  
+ - **Exchange**: Receives messages from producers and routes them to queues based on predefined rules (bindings and routing keys).  
+ - **Queue**: A buffer that stores messages until they are processed by consumers.  
+ - **Binding**: A link between an exchange and a queue, defining how messages should be routed.  
+ - **Consumer**: The application that receives and processes messages from the queue.  
 
 **2. Message Flow:**  
- > A producer sends a message to an **exchange** in RabbitMQ.  
- > The exchange uses **routing keys** and **bindings** to determine which **queue(s)** should receive the message.  
- > The message is stored in the queue until a **consumer** retrieves and processes it.  
+ - A producer sends a message to an **exchange** in RabbitMQ.  
+ - The exchange uses **routing keys** and **bindings** to determine which **queue(s)** should receive the message.  
+ - The message is stored in the queue until a **consumer** retrieves and processes it.  
 
 **3. Key Features:**  
- > **Reliability**: RabbitMQ ensures messages are not lost by supporting message acknowledgments, persistence, and durable queues.  
- > **Scalability**: It can handle high volumes of messages and distribute workloads across multiple consumers.  
- > **Flexibility**: RabbitMQ supports various messaging patterns (e.g., point-to-point, publish/subscribe) and integrates with different programming languages.  
+ - **Reliability**: RabbitMQ ensures messages are not lost by supporting message acknowledgments, persistence, and durable queues.  
+ - **Scalability**: It can handle high volumes of messages and distribute workloads across multiple consumers.  
+ - **Flexibility**: RabbitMQ supports various messaging patterns (e.g., point-to-point, publish/subscribe) and integrates with different programming languages.  
 
 **Example Use Case:**  
 In a web application, RabbitMQ can be used to offload time-consuming tasks (e.g., sending emails or processing images) to background workers.   
@@ -34,29 +34,29 @@ In summary, RabbitMQ is a powerful tool for enabling reliable, scalable, and fle
 In RabbitMQ, a **queue** and a **topic** serve different purposes in message routing and distribution:  
 
 **Queue:**  
-> A queue is a storage buffer that holds messages until they are consumed by a receiver (consumer).  
-> Messages are delivered to consumers in a **First-In-First-Out (FIFO)** order, ensuring fair processing.  
-> Queues are directly linked to consumers, and each message in a queue is typically consumed by only one consumer (unless using a competing consumers pattern).  
-> Use case: Queues are ideal for point-to-point messaging, where messages need to be processed sequentially by a single consumer or a group of consumers sharing the workload.  
+- A queue is a storage buffer that holds messages until they are consumed by a receiver (consumer).  
+- Messages are delivered to consumers in a **First-In-First-Out (FIFO)** order, ensuring fair processing.  
+- Queues are directly linked to consumers, and each message in a queue is typically consumed by only one consumer (unless using a competing consumers pattern).  
+- Use case: Queues are ideal for point-to-point messaging, where messages need to be processed sequentially by a single consumer or a group of consumers sharing the workload.  
 
 **Topic:**  
-> A topic is not a standalone component in RabbitMQ but rather a concept tied to the **topic exchange**.  
-> A topic exchange routes messages to queues based on **routing keys** and **pattern matching** (e.g., using wildcards like * or #).  
-> This allows messages to be selectively routed to multiple queues based on their content or metadata.  
-> Use case: Topics are ideal for publish-subscribe patterns, where messages need to be broadcast to multiple consumers or filtered based on specific criteria.  
+- A topic is not a standalone component in RabbitMQ but rather a concept tied to the **topic exchange**.  
+- A topic exchange routes messages to queues based on **routing keys** and **pattern matching** (e.g., using wildcards like * or #).  
+- This allows messages to be selectively routed to multiple queues based on their content or metadata.  
+- Use case: Topics are ideal for publish-subscribe patterns, where messages need to be broadcast to multiple consumers or filtered based on specific criteria.  
 
 **Key Differences:**  
 **Message Delivery:**  
-> Queues deliver messages to a single consumer or a group of competing consumers.  
-> Topics (via topic exchanges) enable messages to be routed to multiple queues based on patterns, supporting one-to-many messaging.  
+- Queues deliver messages to a single consumer or a group of competing consumers.  
+- Topics (via topic exchanges) enable messages to be routed to multiple queues based on patterns, supporting one-to-many messaging.  
 
 **Use Cases:**  
-> Queues are used for task distribution and load balancing.  
-> Topics are used for event broadcasting or selective message routing.  
+- Queues are used for task distribution and load balancing.  
+- Topics are used for event broadcasting or selective message routing.  
 
 **Structure:**  
-> Queues are physical storage for messages.  
-> Topics are logical routing rules applied by exchanges.  
+- Queues are physical storage for messages.  
+- Topics are logical routing rules applied by exchanges.  
 
 
 **Q3. How do you install RabbitMQ on a local machine?**  
@@ -75,32 +75,32 @@ Types of Exchanges in RabbitMQ:
 RabbitMQ supports four main types of exchanges, each designed for specific routing scenarios:  
 
 **Direct Exchange:**   
- > Routes messages to queues based on an **exact match** between the message's **routing key** and the queue's **binding key**.  
- > Use case: Ideal for point-to-point messaging, where a message is intended for a specific queue.  
- > Example: A message with routing key **order.process** is routed only to the queue bound with the same key.  
+ - Routes messages to queues based on an **exact match** between the message's **routing key** and the queue's **binding key**.  
+ - Use case: Ideal for point-to-point messaging, where a message is intended for a specific queue.  
+ - Example: A message with routing key **order.process** is routed only to the queue bound with the same key.  
 
 **Topic Exchange:**  
- > Routes messages to queues based on **pattern matching** between the message's routing key and the queue's binding key.  
- > Supports wildcards: * (matches one word) and # (matches zero or more words).  
- > Use case: Ideal for publish-subscribe patterns where messages need to be selectively routed to multiple queues.  
+ - Routes messages to queues based on **pattern matching** between the message's routing key and the queue's binding key.  
+ - Supports wildcards: * (matches one word) and # (matches zero or more words).  
+ - Use case: Ideal for publish-subscribe patterns where messages need to be selectively routed to multiple queues.  
  Example: A message with routing key order.europe.paid can be routed to queues bound to order.*.paid or order.#.  
 
 **Fanout Exchange:**  
- > Routes messages to **all bound queues** without considering the routing key.  
- > Use case: Ideal for broadcasting messages to multiple consumers or queues.  
+ - Routes messages to **all bound queues** without considering the routing key.  
+ - Use case: Ideal for broadcasting messages to multiple consumers or queues.  
  Example: A message sent to a fanout exchange is delivered to all queues bound to it, regardless of the routing key.  
 
 **Headers Exchange:**  
- > Routes messages based on **header attributes** (key-value pairs) in the message, rather than the routing key.  
- > Uses a special argument **(x-match)** to determine if all headers **(all)** or any headers **(any)** must match.  
- > Use case: Ideal for complex routing logic based on message metadata.  
- > Example: A message with headers {"region": "europe", "type": "order"} is routed to queues with matching header bindings.  
+ - Routes messages based on **header attributes** (key-value pairs) in the message, rather than the routing key.  
+ - Uses a special argument **(x-match)** to determine if all headers **(all)** or any headers **(any)** must match.  
+ - Use case: Ideal for complex routing logic based on message metadata.  
+ - Example: A message with headers {"region": "europe", "type": "order"} is routed to queues with matching header bindings.  
 
 Summary:  
- > **Direct Exchange:** Routes messages based on an exact routing key match.  
- > **Topic Exchange:** Routes messages using pattern matching with wildcards.  
- > **Fanout Exchange:** Broadcasts messages to all bound queues.  
- > **Headers Exchange:** Routes messages based on header attributes.  
+ - **Direct Exchange:** Routes messages based on an exact routing key match.  
+ - **Topic Exchange:** Routes messages using pattern matching with wildcards.  
+ - **Fanout Exchange:** Broadcasts messages to all bound queues.  
+ - **Headers Exchange:** Routes messages based on header attributes.  
 
 Each exchange type serves a specific purpose, enabling **flexible** and **efficient** message routing in RabbitMQ-based systems.  
 
@@ -119,24 +119,24 @@ maintaining **message reliability** and **fault tolerance** in distributed syste
 
 **How Message Acknowledgments Work:**  
 **Definition:**  
- > When a consumer receives a message from a queue, it processes the message and sends an **acknowledgment** back to RabbitMQ to confirm successful processing.  
- > If RabbitMQ does not receive an acknowledgment within a specified time (or if the consumer fails), it assumes the message was not processed and  
+ - When a consumer receives a message from a queue, it processes the message and sends an **acknowledgment** back to RabbitMQ to confirm successful processing.  
+ - If RabbitMQ does not receive an acknowledgment within a specified time (or if the consumer fails), it assumes the message was not processed and  
    re-queues it for delivery to another consumer or the same consumer once it recovers.  
 
 **Ensuring Reliability:**  
- > Acknowledgments prevent **data loss** by ensuring that messages are not removed from the queue until they are successfully processed.   
- > If a consumer crashes or fails to process a message, RabbitMQ will redeliver the message to another consumer or the same consumer once it recovers, ensuring no message is lost.  
+ - Acknowledgments prevent **data loss** by ensuring that messages are not removed from the queue until they are successfully processed.   
+ - If a consumer crashes or fails to process a message, RabbitMQ will redeliver the message to another consumer or the same consumer once it recovers, ensuring no message is lost.  
 
 **Process:**  
- > **Producer**: Sends a message to an exchange, which routes it to a queue.  
- > **Consumer**: Retrieves the message from the queue, processes it, and sends an acknowledgment back to RabbitMQ.  
- > **RabbitMQ**: Removes the message from the queue only after receiving the acknowledgment. If no acknowledgment is received, the message is re-queued or delivered to another consumer
+ - **Producer**: Sends a message to an exchange, which routes it to a queue.  
+ - **Consumer**: Retrieves the message from the queue, processes it, and sends an acknowledgment back to RabbitMQ.  
+ - **RabbitMQ**: Removes the message from the queue only after receiving the acknowledgment. If no acknowledgment is received, the message is re-queued or delivered to another consumer
    or the same consumer once it recovers.    
 
 **Key Benefits:**  
- > **Fault Tolerance**: Protects against data loss by re-queuing unacknowledged messages.  
- > **Guaranteed Delivery**: Ensures messages are processed at least once, even in the event of consumer failures.  
- > **Flow Control**: Allows RabbitMQ to manage the flow of messages based on consumer processing capacity.  
+ - **Fault Tolerance**: Protects against data loss by re-queuing unacknowledged messages.  
+ - **Guaranteed Delivery**: Ensures messages are processed at least once, even in the event of consumer failures.  
+ - **Flow Control**: Allows RabbitMQ to manage the flow of messages based on consumer processing capacity.  
 
 Example:  
 In an e-commerce system, when processing an order payment, the consumer retrieves the payment message from the queue, processes the payment,  
@@ -198,21 +198,21 @@ Message routing in RabbitMQ is an essential feature that allows messages to be d
 
 **Key Components for Message Routing:**  
 **Exchanges:**   
- > These are responsible for receiving messages from producers and deciding how to route them to queues based on routing rules.   
+ - These are responsible for receiving messages from producers and deciding how to route them to queues based on routing rules.   
    RabbitMQ supports different types of exchanges, such as direct, topic, fanout, and headers exchanges.  
 **Queues:**  
- > Queues store messages until they are consumed by consumers.  
- > Each queue can be bound to one or more exchanges.  
+ - Queues store messages until they are consumed by consumers.  
+ - Each queue can be bound to one or more exchanges.  
 
 **Bindings:**  
- > Bindings are rules that link exchanges to queues and define how messages should be routed.  
- > They include a routing key or pattern that determines which messages go to which queues.  
+ - Bindings are rules that link exchanges to queues and define how messages should be routed.  
+ - They include a routing key or pattern that determines which messages go to which queues.  
 
 **Summary:**  
- > Message routing in RabbitMQ is implemented using exchanges, queues, and bindings.  
- > Routing keys determine how messages are directed to specific queues.  
- > Different exchange types (direct, topic, fanout, headers) provide flexibility in routing strategies.  
- > Example: Use a direct exchange to route messages to specific queues based on exact routing key matches.
+ - Message routing in RabbitMQ is implemented using exchanges, queues, and bindings.  
+ - Routing keys determine how messages are directed to specific queues.  
+ - Different exchange types (direct, topic, fanout, headers) provide flexibility in routing strategies.  
+ - Example: Use a direct exchange to route messages to specific queues based on exact routing key matches.
 
 
 **Q8. What are dead-letter exchanges and how do they work in RabbitMQ?**  
@@ -232,15 +232,15 @@ This mechanism is essential for managing message failures, retries, and ensuring
 
 **How Dead-Letter Exchanges Work:**
 **Purpose:**  
- > Dead-letter exchanges provide a way to handle undeliverable messages, such as those that are rejected, expire, or exceed queue length limits.  
- > They allow you to inspect, log, or reprocess failed messages, improving system reliability and fault tolerance.  
+ - Dead-letter exchanges provide a way to handle undeliverable messages, such as those that are rejected, expire, or exceed queue length limits.  
+ - They allow you to inspect, log, or reprocess failed messages, improving system reliability and fault tolerance.  
 
 **When Messages are Dead-Lettered:**  
- > A message is routed to a DLX in the following scenarios:  
- > The message is **rejected** by a consumer with requeue=false.  
- > The message **expires** due to a TTL (Time-To-Live) setting.  
- > The queue **exceeds its length limit.**  
- > The message cannot be routed to any queue (e.g., due to a missing binding).  
+ - A message is routed to a DLX in the following scenarios:  
+ - The message is **rejected** by a consumer with requeue=false.  
+ - The message **expires** due to a TTL (Time-To-Live) setting.  
+ - The queue **exceeds its length limit.**  
+ - The message cannot be routed to any queue (e.g., due to a missing binding).  
 
 **Routing to DLX:**  
 When a message is dead-lettered, it is rerouted to the DLX with an optional **dead-letter routing key.** 
@@ -263,10 +263,10 @@ Create the Dead-Letter Exchange: channel.exchange_declare(exchange='dlx_exchange
 DLXs are commonly used to handle errors, retries, or debugging. For example, in an e-commerce application, undeliverable order messages might be sent to a DLX for analysis and resolution without disrupting the flow of successfully processed orders.  
 
 **Summary:**
- > **Dead-letter exchanges** handle undeliverable messages by rerouting them to a DLX.  
- > Messages are dead-lettered when they are rejected, expire, or exceed queue limits.  
- > Configure a DLX by declaring an exchange, creating a DLQ, and binding them together.  
- > Use the x-dead-letter-exchange and x-dead-letter-routing-key arguments to enable DLX for a queue.  
+ - **Dead-letter exchanges** handle undeliverable messages by rerouting them to a DLX.  
+ - Messages are dead-lettered when they are rejected, expire, or exceed queue limits.  
+ - Configure a DLX by declaring an exchange, creating a DLQ, and binding them together.  
+ - Use the x-dead-letter-exchange and x-dead-letter-routing-key arguments to enable DLX for a queue.  
 
 Dead-letter exchanges are a powerful tool for managing message failures and ensuring no message is lost in RabbitMQ.  
 
@@ -286,33 +286,33 @@ from receipt to delivery.
 
 **Key Responsibilities of the RabbitMQ Broker:**
 **1. Message Routing and Queuing:**
-   > The broker receives messages from producers and routes them to the appropriate queues based on **exchanges**, **bindings**, and **routing keys**.
-   > It stores messages in queues until they are consumed by consumers.
+   - The broker receives messages from producers and routes them to the appropriate queues based on **exchanges**, **bindings**, and **routing keys**.
+   - It stores messages in queues until they are consumed by consumers.
 
 **2. Connection and Channel Management:**
-   > The broker manages **connections** (TCP/IP links between clients and the broker) and **channels** (lightweight connections within a single TCP connection).
-   > Channels allow multiple logical connections over a single physical connection, reducing overhead.
+   - The broker manages **connections** (TCP/IP links between clients and the broker) and **channels** (lightweight connections within a single TCP connection).
+   - Channels allow multiple logical connections over a single physical connection, reducing overhead.
 
 **3. Message Reliability and Persistence:**
-   > The broker ensures message reliability by supporting features like **message acknowledgments, persistent messages, and durable queues**.
-   > Persistent messages are written to disk, ensuring they are not lost in case of a broker restart or crash.
+   - The broker ensures message reliability by supporting features like **message acknowledgments, persistent messages, and durable queues**.
+   - Persistent messages are written to disk, ensuring they are not lost in case of a broker restart or crash.
 
 **4. Delivery Guarantees:**
-   > The broker ensures that messages are delivered to consumers according to the configured routing rules and delivery modes (e.g., at-most-once, at-least-once).
-   > It handles message redelivery in case of consumer failures or unacknowledged messages.
+   - The broker ensures that messages are delivered to consumers according to the configured routing rules and delivery modes (e.g., at-most-once, at-least-once).
+   - It handles message redelivery in case of consumer failures or unacknowledged messages.
 
 **5. Scalability and Load Balancing:**
-    > The broker supports clustering and federation, enabling horizontal scaling and high availability.
-    > It distributes messages across multiple consumers for load balancing.
+    - The broker supports clustering and federation, enabling horizontal scaling and high availability.
+    - It distributes messages across multiple consumers for load balancing.
 
 **6. Plugins and Extensibility:**
-   > The broker supports plugins for additional functionality, such as **message tracing, authentication, and protocol support** (e.g., MQTT, STOMP).
+   - The broker supports plugins for additional functionality, such as **message tracing, authentication, and protocol support** (e.g., MQTT, STOMP).
 
 **7. Dead-Lettering:**
-   > It supports routing undeliverable messages to dead-letter exchanges for reprocessing or inspection.
+   - It supports routing undeliverable messages to dead-letter exchanges for reprocessing or inspection.
 
 Example Workflow:
- > A 15. What is the role of the RabbitMQ broker?
+ - A 15. What is the role of the RabbitMQ broker?
 Why you might get asked this: Understanding the role of the RabbitMQ broker is crucial for roles that involve managing and optimizing message delivery systems,
 ensuring you can effectively oversee the core component responsible for routing and queuing messages, for example, as a systems architect.
 
@@ -328,44 +328,44 @@ from receipt to delivery.
 
 Key Responsibilities of the RabbitMQ Broker:
 1. Message Routing and Queuing:
-   > The broker receives messages from producers and routes them to the appropriate queues based on exchanges, bindings, and routing keys.
-   > It stores messages in queues until they are consumed by consumers.
+   - The broker receives messages from producers and routes them to the appropriate queues based on exchanges, bindings, and routing keys.
+   - It stores messages in queues until they are consumed by consumers.
 
 2. Connection and Channel Management:
-   > The broker manages connections (TCP/IP links between clients and the broker) and channels (lightweight connections within a single TCP connection).
-   > Channels allow multiple logical connections over a single physical connection, reducing overhead.
+   - The broker manages connections (TCP/IP links between clients and the broker) and channels (lightweight connections within a single TCP connection).
+   - Channels allow multiple logical connections over a single physical connection, reducing overhead.
 
 3. Message Reliability and Persistence:
-   > The broker ensures message reliability by supporting features like message acknowledgments, persistent messages, and durable queues.
-   > Persistent messages are written to disk, ensuring they are not lost in case of a broker restart or crash.
+   - The broker ensures message reliability by supporting features like message acknowledgments, persistent messages, and durable queues.
+   - Persistent messages are written to disk, ensuring they are not lost in case of a broker restart or crash.
 
 4. Delivery Guarantees:
-   > The broker ensures that messages are delivered to consumers according to the configured routing rules and delivery modes (e.g., at-most-once, at-least-once).
-   > It handles message redelivery in case of consumer failures or unacknowledged messages.
+   - The broker ensures that messages are delivered to consumers according to the configured routing rules and delivery modes (e.g., at-most-once, at-least-once).
+   - It handles message redelivery in case of consumer failures or unacknowledged messages.
 
 5. Scalability and Load Balancing:
-    > The broker supports clustering and federation, enabling horizontal scaling and high availability.
-    > It distributes messages across multiple consumers for load balancing.
+    - The broker supports clustering and federation, enabling horizontal scaling and high availability.
+    - It distributes messages across multiple consumers for load balancing.
 
 6. Plugins and Extensibility:
-   > The broker supports plugins for additional functionality, such as message tracing, authentication, and protocol support (e.g., MQTT, STOMP).
+   - The broker supports plugins for additional functionality, such as message tracing, authentication, and protocol support (e.g., MQTT, STOMP).
 
 7. Dead-Lettering: It supports routing undeliverable messages to dead-letter exchanges for reprocessing or inspection.
 
 Example Workflow:
- > A **producer** sends a message to the RabbitMQ broker.
- > The broker routes the message to the appropriate **queue** based on the exchange and routing key.
- > The message is stored in the queue until a **consumer** retrieves and processes it.
- > The broker ensures the message is delivered reliably, even in the event of failures, by using acknowledgments and persistence.
+ - A **producer** sends a message to the RabbitMQ broker.
+ - The broker routes the message to the appropriate **queue** based on the exchange and routing key.
+ - The message is stored in the queue until a **consumer** retrieves and processes it.
+ - The broker ensures the message is delivered reliably, even in the event of failures, by using acknowledgments and persistence.
 
 Summary:
- > The RabbitMQ broker is the central component responsible for **routing**, **queuing**, and **delivering** messages.
- > It manages **connections**, **channels**, and **exchanges** to facilitate communication between producers and consumers.
- > It ensures **message reliability** through features like acknowledgments, persistence, and durable queues.
- > The broker supports **scalability**, **load balancing**, and **extensibility** through clustering and plugins. sends a message to the RabbitMQ broker.
- > The broker routes the message to the appropriate queue based on the exchange and routing key.
- > The message is stored in the queue until a consumer retrieves and processes it.
- > The broker ensures the message is delivered reliably, even in the event of failures, by using acknowledgments and persistence.
+ - The RabbitMQ broker is the central component responsible for **routing**, **queuing**, and **delivering** messages.
+ - It manages **connections**, **channels**, and **exchanges** to facilitate communication between producers and consumers.
+ - It ensures **message reliability** through features like acknowledgments, persistence, and durable queues.
+ - The broker supports **scalability**, **load balancing**, and **extensibility** through clustering and plugins. sends a message to the RabbitMQ broker.
+ - The broker routes the message to the appropriate queue based on the exchange and routing key.
+ - The message is stored in the queue until a consumer retrieves and processes it.
+ - The broker ensures the message is delivered reliably, even in the event of failures, by using acknowledgments and persistence.
 
 
 **Q10. How do you handle message retries in RabbitMQ?**
@@ -397,65 +397,6 @@ Handling message retries in RabbitMQ is crucial for ensuring reliability and fau
 
 By leveraging RabbitMQ's built-in features like DLXs and TTL properties, along with custom retry strategies, you can design systems that gracefully handle transient errors and ensure robust message delivery. Let me know if you'd like an example configuration or code snippet to illustrate this process!  
 
-```C#
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Text;
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        var factory = new ConnectionFactory() { HostName = "localhost" };
-
-        using (var connection = factory.CreateConnection())
-        using (var channel = connection.CreateModel())
-        {
-            // Declare the dead-letter exchange
-            channel.ExchangeDeclare("dead-letter-exchange", ExchangeType.Direct);
-
-            // Declare the dead-letter queue
-            channel.QueueDeclare("dead-letter-queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
-            channel.QueueBind("dead-letter-queue", "dead-letter-exchange", "dead-letter-routing-key");
-
-            // Declare the main queue with dead-letter exchange properties
-            var arguments = new Dictionary<string, object>
-            {
-                { "x-dead-letter-exchange", "dead-letter-exchange" },
-                { "x-dead-letter-routing-key", "dead-letter-routing-key" }
-            };
-            channel.QueueDeclare("main-queue", durable: true, exclusive: false, autoDelete: false, arguments: arguments);
-
-            // Publish a test message
-            var properties = channel.CreateBasicProperties();
-            properties.Persistent = true;
-            channel.BasicPublish(exchange: "", routingKey: "main-queue", basicProperties: properties, body: Encoding.UTF8.GetBytes("Test Message"));
-
-            Console.WriteLine("Message Published!");
-
-            // Consume messages from the main queue
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-
-                Console.WriteLine($"Received: {message}");
-
-                // Simulate message failure
-                channel.BasicReject(deliveryTag: ea.DeliveryTag, requeue: false); // Send to DLX
-            };
-
-            channel.BasicConsume(queue: "main-queue", autoAck: false, consumer: consumer);
-
-            Console.WriteLine("Press [enter] to exit.");
-            Console.ReadLine();
-        }
-    }
-}
-
-```
 
 Here’s an example configuration for implementing message retries with RabbitMQ in C#, including the use of dead-letter exchanges for handling undeliverable messages:
 
