@@ -1,7 +1,7 @@
 # RabbitMQ
 
 **Q1. What is RabbitMQ?**  
-RabbitMQ is an open-source message broker that facilitates communication between distributed systems by managing message queues. It works by receiving   
+RabbitMQ is an open-source message broker that facilitates communication between distributed systems by managing message queues. It works by receiving 
 messages from producers, routing them though exchanges, and delivering them to appropriate queues for consumers to process.  
 Although RabbitMQ support multiple protocols, the most commonly used is AMQP.  
 
@@ -24,13 +24,14 @@ Although RabbitMQ support multiple protocols, the most commonly used is AMQP.
  - **Flexibility**: RabbitMQ supports various messaging patterns (e.g., point-to-point, publish/subscribe) and integrates with different programming languages.  
 
 **Example Use Case:**  
-In a web application, RabbitMQ can be used to offload time-consuming tasks (e.g., sending emails or processing images) to background workers.   
-The web server (producer) sends a task message to RabbitMQ, which routes it to a queue. A background worker (consumer) retrieves the message and processes the task asynchronously,  
+In a web application, RabbitMQ can be used to offload time-consuming tasks (e.g., sending emails or processing images) to background workers. 
+The web server (producer) sends a task message to RabbitMQ, which routes it to a queue. A background worker (consumer) retrieves the message and processes the task asynchronously, 
 improving system performance and responsiveness.  
 In summary, RabbitMQ is a powerful tool for enabling reliable, scalable, and flexible communication in distributed systems by decoupling producers and consumers through message queuing.  
 
 
 **Q2. Explain the difference between a queue and a topic in RabbitMQ.**  
+
 In RabbitMQ, a **queue** and a **topic** serve different purposes in message routing and distribution:  
 
 **Queue:**  
@@ -60,15 +61,15 @@ In RabbitMQ, a **queue** and a **topic** serve different purposes in message rou
 
 
 **Q3. How do you install RabbitMQ on a local machine?**  
-To install RabbitMQ on a local machine, first ensure that Erlang is installed, as RabbitMQ depends on it. Then, download RabbitMQ from the official website,  
-install it, and verify the installation by starting the RabbitMQ server and accessing the management console.  
+
+To install RabbitMQ on a local machine, first ensure that Erlang is installed, as RabbitMQ depends on it. Then, download RabbitMQ from the official website, install it, and verify the  installation by starting the RabbitMQ server and accessing the management console.  
 
 **Q4. What are exchanges in RabbitMQ? Describe the different types of exchanges.**  
-**Why you might get asked this:** Understanding exchanges and their types in RabbitMQ is crucial for roles that involve designing and optimizing message routing strategies,  
- ensuring efficient communication in distributed systems.  
 
-An **exchange** in RabbitMQ is a component responsible for receiving messages from producers and routing them to the appropriate queues.  
-It acts as a decision-making hub, determining how messages should be distributed based on predefined rules (bindings and routing keys).  
+**Why you might get asked this:** Understanding exchanges and their types in RabbitMQ is crucial for roles that involve designing and optimizing message routing strategies, ensuring  efficient communication in distributed systems.  
+
+An **exchange** in RabbitMQ is a component responsible for receiving messages from producers and routing them to the appropriate queues. 
+It acts as a decision-making hub, determining how messages should be distributed based on predefined rules (bindings and routing keys). 
 Exchanges do not store messages; they simply route them to queues.  
 
 Types of Exchanges in RabbitMQ:  
@@ -105,8 +106,8 @@ Summary:
 Each exchange type serves a specific purpose, enabling **flexible** and **efficient** message routing in RabbitMQ-based systems.  
 
 **Q5. What is the purpose of message acknowledgments in RabbitMQ?**
-Why you might get asked this: Understanding the purpose of message acknowledgments in RabbitMQ is crucial for roles that involve ensuring message reliability  
-and fault tolerance, for example, as a systems architect.  
+
+Why you might get asked this: Understanding the purpose of message acknowledgments in RabbitMQ is crucial for roles that involve ensuring message reliability and fault tolerance, for example, as a systems architect.  
 
 **How to answer:**  
 Define message acknowledgments and their role in RabbitMQ.  
@@ -139,14 +140,14 @@ maintaining **message reliability** and **fault tolerance** in distributed syste
  - **Flow Control**: Allows RabbitMQ to manage the flow of messages based on consumer processing capacity.  
 
 Example:  
-In an e-commerce system, when processing an order payment, the consumer retrieves the payment message from the queue, processes the payment,  
-and sends an acknowledgment to RabbitMQ. If the consumer fails (e.g., due to a crash) before sending the acknowledgment, RabbitMQ will re-queue  
-the message for another consumer to process, ensuring the payment is not lost.  
+In an e-commerce system, when processing an order payment, the consumer retrieves the payment message from the queue, processes the payment, and sends an acknowledgment to RabbitMQ. 
+If the consumer fails (e.g., due to a crash) before sending the acknowledgment, RabbitMQ will re-queue the message for another consumer to process, ensuring the payment is not lost.  
 
 In summary, message acknowledgments in RabbitMQ are essential for ensuring **reliable message delivery** and **fault tolerance** in distributed systems.  
 
 **Q6. Explain the concept of message durability in RabbitMQ.**  
-Why you might get asked this: Understanding the concept of message durability in RabbitMQ is crucial for roles that involve ensuring data persistence and reliability in messaging   systems, for example, as a DevOps engineer.  
+
+Why you might get asked this: Understanding the concept of message durability in RabbitMQ is crucial for roles that involve ensuring data persistence and reliability in messaging  systems, for example, as a DevOps engineer.  
 
 **How to answer:**  
 Define message durability and its importance in RabbitMQ.  
@@ -154,10 +155,9 @@ Explain how to configure message durability for queues and messages.
 Describe the impact of message durability on system performance and reliability.  
 
 **Example answer:**  
-"Message durability in RabbitMQ ensures that messages are not lost even if the broker crashes. By marking both the queue and the messages as durable,  
-RabbitMQ will persist them to disk, providing higher reliability."  
+"Message durability in RabbitMQ ensures that messages are not lost even if the broker crashes. By marking both the queue and the messages as durable, RabbitMQ will persist them to disk, providing higher reliability."  
 
-Message durability in RabbitMQ refers to the ability to persist messages and queue configurations so that they are not lost in the event of a server restart or crash.  
+Message durability in RabbitMQ refers to the ability to persist messages and queue configurations so that they are not lost in the event of a server restart or crash. 
 It ensures that critical data remains intact and available, even during system failures, making it essential for building reliable and fault-tolerant messaging systems.  
 
 or   
@@ -168,7 +168,7 @@ Message durability in RabbitMQ is a key feature designed to ensure the persisten
 To achieve message durability, both queues and messages need to be configured appropriately:  
 **Durable Queues:** A queue must be declared as durable by setting the durable flag to true. This ensures the queue definition itself is saved to disk.  
 
-**Persistent Messages:** When publishing a message, it should be marked as persistent by setting the delivery_mode property to 2.   
+**Persistent Messages:** When publishing a message, it should be marked as persistent by setting the delivery_mode property to 2. 
 This ensures the message content is stored on disk rather than remaining in memory only.  
 
 **Impact on System Performance and Reliability:**  
