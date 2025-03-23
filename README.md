@@ -119,15 +119,15 @@ Why you might get asked this: Understanding the purpose of message acknowledgmen
 
 **Purpose of Message Acknowledgments in RabbitMQ:**  
 
-**Message acknowledgments** (acks) in RabbitMQ are a mechanism to ensure that messages are reliably processed and not lost due to consumer failures. They play a critical role in  
+**Message acknowledgments** (acks) in RabbitMQ are a mechanism to ensure that messages are reliably processed and not lost due to consumer failures. They play a critical role in 
 maintaining **message reliability** and **fault tolerance** in distributed systems.   
 
 **How Message Acknowledgments Work:**  
 
 **Definition:**  
  - When a consumer receives a message from a queue, it processes the message and sends an **acknowledgment** back to RabbitMQ to confirm successful processing.  
- - If RabbitMQ does not receive an acknowledgment within a specified time (or if the consumer fails), it assumes the message was not processed and  
-   re-queues it for delivery to another consumer or the same consumer once it recovers.  
+ - If RabbitMQ does not receive an acknowledgment within a specified time (or if the consumer fails), it assumes the message was not processed and re-queues it for delivery to another 
+   consumer or the same consumer once it recovers.  
 
 **Ensuring Reliability:**  
  - Acknowledgments prevent **data loss** by ensuring that messages are not removed from the queue until they are successfully processed.   
@@ -175,29 +175,31 @@ Why you might get asked this: Understanding the concept of message durability in
 **Configuration for Queues and Messages:**  
 
 To achieve message durability, both queues and messages need to be configured appropriately:  
-**Durable Queues:** A queue must be declared as durable by setting the durable flag to true. This ensures the queue definition itself is saved to disk.  
 
-**Persistent Messages:** When publishing a message, it should be marked as persistent by setting the delivery_mode property to 2. 
-This ensures the message content is stored on disk rather than remaining in memory only.  
+**Durable Queues:**
+  - A queue must be declared as durable by setting the durable flag to true. This ensures the queue definition itself is saved to disk.  
+
+**Persistent Messages:** 
+ - When publishing a message, it should be marked as persistent by setting the delivery_mode property to 2. This ensures the message content is stored on disk rather than remaining in memory only.  
 
 **Impact on System Performance and Reliability:**  
 
 **Reliability:**  
-Durability ensures that messages are not lost during server failures, making the system more reliable for critical applications.  
-Example: In a payment processing system, durable queues and persistent messages ensure that payment transactions are not lost even if the server crashes.  
+ - Durability ensures that messages are not lost during server failures, making the system more reliable for critical applications.  
+ - Example: In a payment processing system, durable queues and persistent messages ensure that payment transactions are not lost even if the server crashes.  
 
 **Performance Trade-off:**  
-Writing messages to disk (persistence) is slower than keeping them in memory, which can impact throughput and latency.  
-Durability adds overhead, so it should be used only when message loss is unacceptable.  
-For non-critical messages, non-durable queues and transient messages can be used to improve performance.  
+ - Writing messages to disk (persistence) is slower than keeping them in memory, which can impact throughput and latency. Durability adds overhead, so it should be used only when 
+   message loss is unacceptable. For non-critical messages, non-durable queues and transient messages can be used to improve performance.  
 
 **Q7. How can you implement message routing in RabbitMQ?**  
+
 Why you might get asked this: Understanding how to implement message routing in RabbitMQ is crucial for roles that involve designing efficient communication patterns in distributed systems, ensuring you can effectively manage message flow and routing strategies, for example, as a software architect.  
 
 How to answer:  
-Define the concept of message routing in RabbitMQ and its significance.  
-Explain the role of exchanges, queues, and bindings in routing messages.  
-Provide a brief example of setting up a routing key to direct messages to specific queues.  
+ - Define the concept of message routing in RabbitMQ and its significance.  
+ - Explain the role of exchanges, queues, and bindings in routing messages.  
+ - Provide a brief example of setting up a routing key to direct messages to specific queues.  
 
 Example answer:  
 
@@ -228,6 +230,7 @@ Message routing in RabbitMQ is an essential feature that allows messages to be d
 
 
 **Q8. What are dead-letter exchanges and how do they work in RabbitMQ?**  
+
 Why you might get asked this: Understanding dead-letter exchanges and their functionality in RabbitMQ is crucial for roles that involve managing message failures and retries, ensuring you can effectively handle undeliverable messages, for example, as a systems administrator.  
 
 How to answer:  
