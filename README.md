@@ -15,6 +15,10 @@ Although RabbitMQ support multiple protocols, the most commonly used is AMQP.
  - **Binding**: A link between an exchange and a queue, defining how messages should be routed.  
  - **Consumer**: The application that receives and processes messages from the queue.  
 
+![image](https://github.com/user-attachments/assets/b4821495-d55e-45c8-a98a-851075779c7d)
+
+![image](https://github.com/user-attachments/assets/5e7dd301-cd16-4b92-bb90-ce814d60a8e6)
+
 **2. Message Flow:**  
  - A producer sends a message to an **exchange** in RabbitMQ.  
  - The exchange uses **routing keys** and **bindings** to determine which **queue(s)** should receive the message.  
@@ -99,6 +103,8 @@ RabbitMQ supports four main types of exchanges, each designed for specific routi
  - Uses a special argument **(x-match)** to determine if all headers **(all)** or any headers **(any)** must match.  
  - Use case: Ideal for complex routing logic based on message metadata.  
  - Example: A message with headers {"region": "europe", "type": "order"} is routed to queues with matching header bindings.  
+
+![image](https://github.com/user-attachments/assets/f972808f-556a-4eef-a194-c7b5af9e788d)
 
 Summary:  
  - **Direct Exchange:** Routes messages based on an exact routing key match.  
@@ -1517,3 +1523,74 @@ The ConfirmSelect() method enables publisher confirms, allowing you to verify th
 
 WaitForConfirmsOrDie() ensures RabbitMQ confirms that all published messages are received. If not, the method will throw an exception.
 
+Here's a detailed explanation of prefetching in RabbitMQ with C# code examples:
+
+### Understanding Prefetch in RabbitMQ (C# Implementation)
+
+https://medium.com/cwan-engineering/rabbitmq-concepts-and-best-practices-aa3c699d6f08
+Prefetch controls how many unacknowledged messages a consumer can have at once, acting as a flow control mechanism.
+
+#### Basic Prefetch Setup
+```csharp
+var factory = new ConnectionFactory() { HostName = "localhost" };
+using (var connection = factory.CreateConnection())
+using (var channel = connection.CreateModel())
+{
+    // Set prefetch count (QoS)
+    channel.BasicQos(
+        prefetchSize: 0,     // No size limit (0 = unlimited)
+        prefetchCount: 10,   // Max 10 unacknowledged messages
+        global: false       // Per-consumer limit (true = per-channel)
+    );
+
+    var consumer = new EventingBasicConsumer(channel);
+    consumer.Received += (model, ea) =>
+    {
+        // Process message
+        ProcessMessage(ea.Body.ToArray());
+        
+        // Manual acknowledgment
+        channel.BasicAck(ea.DeliveryTag, false);
+    };
+
+    channel.BasicConsume(
+        queue: "work_queue",
+        autoAck: false,      // Manual acknowledgments
+        consumer: consumer
+    );
+}
+```
+
+#### Advanced Prefetch Techniques
+
+1. **Dynamic Prefetch Adjustment**
+```csharp
+// Adjust based on consumer capacity
+int currentLoad = GetCurrentSystemLoad();
+int prefetch = CalculateOptimalPrefetch(currentLoad);
+
+channel.BasicQos(0, (ushort)prefetch, false);
+```
+
+2. **Prefetch with Priority Queues**
+```csharp
+channel.BasicQos(0, 5, false); // Lower prefetch for high-priority queues
+```
+
+3. **Monitoring Prefetch Impact**
+```csharp
+// Check unacknowledged messages
+var queueInfo = channel.QueueDeclarePassive("work_queue");
+Console.WriteLine($"Unacked messages: {queueInfo.MessageCount}");
+```
+
+
+**Performance Considerations**:
+- Higher prefetch values increase throughput but also memory usage
+- Lower values ensure fair distribution but may reduce efficiency
+- Optimal values depend on message processing time (typically 2-3x your average processing time)
+
+###References  
+https://seventhstate.io/what-is-rabbitmq/  
+**Idempotency**  
+https://medium.com/@debasisdasnospdii/idempotency-in-scalable-distributed-architectures-example-e23a12c70048
