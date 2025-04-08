@@ -1470,8 +1470,7 @@ Remember to:
 - Implement connection recovery logic
 - Test with real RabbitMQ instances (Docker is great for this)
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+---
 
 Key Updates:
 Publisher Confirms:
